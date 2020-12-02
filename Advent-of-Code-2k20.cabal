@@ -20,6 +20,7 @@ extra-source-files:
     ChangeLog.md
 data-files:
     input/Day01.txt
+    input/Day02.txt
 
 source-repository head
   type: git
@@ -28,7 +29,9 @@ source-repository head
 library
   exposed-modules:
       Aoc.Input
+      Aoc.Parsers
       Day01
+      Day02
   other-modules:
       Paths_Advent_of_Code_2k20
   hs-source-dirs:

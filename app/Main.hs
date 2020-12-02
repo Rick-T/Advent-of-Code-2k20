@@ -2,6 +2,7 @@ module Main where
 
 import Control.Monad (forM_)
 import Day01 (part1, part2)
+import Day02 (part1, part2)
 import System.Environment (getArgs)
 import System.TimeIt (timeItNamed)
 
@@ -18,6 +19,7 @@ runPuzzle p = do
 
 getFuncs :: Int -> (IO (), IO ())
 getFuncs 1 = printable (Day01.part1, Day01.part2)
+getFuncs 2 = printable (Day02.part1, Day02.part2)
 
 printable :: (Show a, Show b) => (IO a, IO b) -> (IO (), IO ())
 printable (a, b) = (print =<< a, print =<< b)
