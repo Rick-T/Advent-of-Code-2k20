@@ -2,8 +2,8 @@ module Day02 where
 
 import Aoc.Input (readInputListParsed, withInput)
 import Aoc.Parsers (parseBest, positiveInt)
+import Aoc.Util (countMatches)
 import Data.Char (isLetter)
-import Data.Foldable (Foldable (foldl'))
 import Text.ParserCombinators.ReadP
   ( ReadP,
     char,
@@ -42,9 +42,6 @@ checkDbEntry' (DbEntry (Policy pos1 pos2 letter) password) =
 
 occurences :: Char -> Password -> Int
 occurences letter = countMatches (== letter)
-
-countMatches :: (a -> Bool) -> [a] -> Int
-countMatches condition = foldl' (\c a -> if condition a then c + 1 else c) 0
 
 parseDbEntry :: String -> DbEntry
 parseDbEntry = parseBest dbEntryParser
