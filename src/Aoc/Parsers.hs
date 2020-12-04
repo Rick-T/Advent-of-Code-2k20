@@ -1,18 +1,22 @@
 module Aoc.Parsers where
 
 import Control.Monad (liftM2)
-import Data.Char (isDigit)
 import Data.Functor (($>))
-import Text.ParserCombinators.ReadP (ReadP, char, eof, many1, option, readP_to_S, satisfy)
+import Data.Maybe (fromJust)
+import Data.Void (Void)
+import Text.Megaparsec (Parsec, option, parseMaybe, some)
+import Text.Megaparsec.Char (char, digitChar)
 
-parseBest :: ReadP a -> String -> a
-parseBest parser = fst . head . readP_to_S (parser <* eof)
+type Parser = Parsec Void String
 
-integer :: (Integral i, Read i) => ReadP i
+parseBest :: Parser a -> String -> a
+parseBest parser = fromJust . parseMaybe parser
+
+integer :: (Integral i, Read i) => Parser i
 integer = liftM2 (*) signed positiveInt
 
-signed :: Integral i => ReadP i
+signed :: Integral i => Parser i
 signed = option 1 (char '-' $> (-1))
 
-positiveInt :: (Integral i, Read i) => ReadP i
-positiveInt = read <$> many1 (satisfy isDigit)
+positiveInt :: (Integral i, Read i) => Parser i
+positiveInt = read <$> some digitChar

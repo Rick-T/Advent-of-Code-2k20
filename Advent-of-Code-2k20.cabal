@@ -22,6 +22,7 @@ data-files:
     input/Day01.txt
     input/Day02.txt
     input/Day03.txt
+    input/Day04.txt
 
 source-repository head
   type: git
@@ -36,12 +37,15 @@ library
       Day01
       Day02
       Day03
+      Day04
   other-modules:
       Paths_Advent_of_Code_2k20
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , containers
+    , megaparsec
     , timeit
     , unordered-containers
     , vector
@@ -57,6 +61,8 @@ executable Advent-of-Code-2k20-exe
   build-depends:
       Advent-of-Code-2k20
     , base >=4.7 && <5
+    , containers
+    , megaparsec
     , timeit
     , unordered-containers
     , vector
@@ -73,6 +79,8 @@ test-suite Advent-of-Code-2k20-test
   build-depends:
       Advent-of-Code-2k20
     , base >=4.7 && <5
+    , containers
+    , megaparsec
     , timeit
     , unordered-containers
     , vector

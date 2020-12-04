@@ -1,15 +1,10 @@
 module Day02 where
 
 import Aoc.Input (readInputListParsed, withInput)
-import Aoc.Parsers (parseBest, positiveInt)
+import Aoc.Parsers (Parser, parseBest, positiveInt)
 import Aoc.Util (countMatches)
-import Data.Char (isLetter)
-import Text.ParserCombinators.ReadP
-  ( ReadP,
-    char,
-    munch1,
-    satisfy,
-  )
+import Text.Megaparsec (some)
+import Text.Megaparsec.Char (char, letterChar)
 
 data Policy = Policy Int Int Char deriving (Show)
 
@@ -46,13 +41,13 @@ occurences letter = countMatches (== letter)
 parseDbEntry :: String -> DbEntry
 parseDbEntry = parseBest dbEntryParser
 
-dbEntryParser :: ReadP DbEntry
+dbEntryParser :: Parser DbEntry
 dbEntryParser = do
   minCount <- positiveInt
   _ <- char '-'
   maxCount <- positiveInt
   _ <- char ' '
-  letter <- satisfy isLetter
+  letter <- letterChar
   _ <- char ':' *> char ' '
-  password <- munch1 isLetter
+  password <- some letterChar
   return $ DbEntry (Policy minCount maxCount letter) password
