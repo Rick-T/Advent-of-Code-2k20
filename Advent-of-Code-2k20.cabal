@@ -23,6 +23,7 @@ data-files:
     input/Day02.txt
     input/Day03.txt
     input/Day04.txt
+    input/Day05.txt
 
 source-repository head
   type: git
@@ -38,6 +39,7 @@ library
       Day02
       Day03
       Day04
+      Day05
   other-modules:
       Paths_Advent_of_Code_2k20
   hs-source-dirs:
