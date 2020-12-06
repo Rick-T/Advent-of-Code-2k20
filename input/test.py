@@ -1,0 +1,1 @@
+print((lambda x: (x[2], sum(range(x[0], x[2]+1))-x[1]))(__import__("functools").reduce(lambda a, b: (min(a[0], b[1]), a[1]+b[1],max(a[2], b[1])), ((2**10, int(line.translate({66:49,70:48,76:48,82:49}), 2), 0) for line in open("Day05.txt").readlines()))))
