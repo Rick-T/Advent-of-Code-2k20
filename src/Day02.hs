@@ -1,6 +1,6 @@
 module Day02 where
 
-import Aoc.Input (readInputListParsed, withInput)
+import Aoc.Input (readInputList, withInput)
 import Aoc.Parsers (Parser, parseBest, positiveInt)
 import Aoc.Util (countMatches)
 import Text.Megaparsec (some)
@@ -13,10 +13,10 @@ data DbEntry = DbEntry Policy Password deriving (Show)
 type Password = String
 
 part1 :: IO Int
-part1 = withInput "Day02.txt" (readInputListParsed parseDbEntry) solvePart1
+part1 = withInput "Day02.txt" (readInputList parseDbEntry) solvePart1
 
 part2 :: IO Int
-part2 = withInput "Day02.txt" (readInputListParsed parseDbEntry) solvePart2
+part2 = withInput "Day02.txt" (readInputList parseDbEntry) solvePart2
 
 solvePart1 :: [DbEntry] -> Int
 solvePart1 = countMatches checkDbEntry

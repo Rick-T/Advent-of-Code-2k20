@@ -1,6 +1,6 @@
 module Day04 where
 
-import Aoc.Input (readInputParsed, withInput)
+import Aoc.Input (readInput, withInput)
 import Aoc.Parsers (parseBest)
 import Aoc.Util (countMatches)
 import Data.Set as S (Set, insert, size)
@@ -41,10 +41,10 @@ data Entry = Valid PassField | Invalid Garbage | CID
 type Parser = Parsec Void String
 
 part1 :: IO Int
-part1 = withInput "Day04.txt" (readInputParsed $parseBest passports) solvePart1
+part1 = withInput "Day04.txt" (readInput $parseBest passports) solvePart1
 
 part2 :: IO Int
-part2 = withInput "Day04.txt" (readInputParsed $parseBest passports) solvePart2
+part2 = withInput "Day04.txt" (readInput $parseBest passports) solvePart2
 
 solvePart1 :: [Passport] -> Int
 solvePart1 = countMatches enoughFields

@@ -2,17 +2,14 @@ module Aoc.Input where
 
 import Paths_Advent_of_Code_2k20 (getDataFileName)
 
-readInput :: String -> IO String
-readInput filename = readFile =<< getDataFileName ("input/" ++ filename)
+readPuzzleInput :: String -> IO String
+readPuzzleInput filename = readFile =<< getDataFileName ("input/" ++ filename)
 
-readInputList :: String -> IO [String]
-readInputList filename = lines <$> readInput filename
+readInput :: (String -> a) -> String -> IO a
+readInput morph filename = morph <$> readPuzzleInput filename
 
-readInputParsed :: (String -> a) -> String -> IO a
-readInputParsed morph filename = morph <$> readInput filename
-
-readInputListParsed :: (String -> a) -> String -> IO [a]
-readInputListParsed morph filename = fmap morph <$> readInputList filename
+readInputList :: (String -> a) -> String -> IO [a]
+readInputList morph filename = fmap morph . lines <$> readPuzzleInput filename
 
 withInput :: String -> (String -> IO a) -> (a -> b) -> IO b
 withInput filename reader f = f <$> reader filename

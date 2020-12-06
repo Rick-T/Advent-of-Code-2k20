@@ -1,7 +1,7 @@
 module Day03 where
 
 import Aoc.Grids (Grid, bounds, fromStringWith, (!))
-import Aoc.Input (readInputParsed, withInput)
+import Aoc.Input (readInput, withInput)
 import Aoc.Util (countMatches)
 
 data Tile = Free | Tree deriving (Eq, Show)
@@ -11,10 +11,10 @@ type Position = (Int, Int)
 type Map = Grid Tile
 
 part1 :: IO Int
-part1 = withInput "Day03.txt" (readInputParsed $ fromStringWith parseTile) $ solveSlope (3, 1)
+part1 = withInput "Day03.txt" (readInput $ fromStringWith parseTile) $ solveSlope (3, 1)
 
 part2 :: IO Int
-part2 = withInput "Day03.txt" (readInputParsed $ fromStringWith parseTile) solvePart2
+part2 = withInput "Day03.txt" (readInput $ fromStringWith parseTile) solvePart2
 
 solveSlope :: (Int, Int) -> Map -> Int
 solveSlope slope grid =

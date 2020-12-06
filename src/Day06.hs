@@ -1,15 +1,15 @@
 module Day06 where
 
-import Aoc.Input (readInputParsed, withInput)
+import Aoc.Input (readInput, withInput)
 import Data.Set (Set, insert)
 
 type Questions = Set Char
 
 part1 :: IO Int
-part1 = withInput "Day06.txt" (readInputParsed readQuestions) solvePart1
+part1 = withInput "Day06.txt" (readInput readQuestions) solvePart1
 
 part2 :: IO Int
-part2 = withInput "Day06.txt" (readInputParsed readQuestions) solvePart2
+part2 = withInput "Day06.txt" (readInput readQuestions) solvePart2
 
 solvePart1 :: [Set String] -> Int
 solvePart1 = sum . fmap (countAnswers any)

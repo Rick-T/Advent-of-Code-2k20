@@ -1,13 +1,13 @@
 module Day05 where
 
-import Aoc.Input (readInputListParsed, withInput)
+import Aoc.Input (readInputList, withInput)
 import Data.List (foldl', sort)
 
 part1 :: IO Int
-part1 = withInput "Day05.txt" (readInputListParsed parseSeatId) maximum
+part1 = withInput "Day05.txt" (readInputList parseSeatId) maximum
 
 part2 :: IO Int
-part2 = withInput "Day05.txt" (readInputListParsed parseSeatId) solvePart2
+part2 = withInput "Day05.txt" (readInputList parseSeatId) solvePart2
 
 solvePart2 :: [Int] -> Int
 solvePart2 = findSeat . sort
