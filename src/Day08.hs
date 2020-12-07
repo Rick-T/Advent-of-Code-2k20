@@ -34,14 +34,17 @@ part1 = withInput "Day08.txt" (readInput $ parseBest program) solvePart1
 
 -- >>> part2
 -- Just 1174
-part2 :: IO (Maybe Int)
+part2 :: IO ProgramResult
 part2 = withInput "Day08.txt" (readInput $ parseBest program) solvePart2
 
 solvePart1 :: Program -> Int
-solvePart1 p = evalState (runProgram p *> gets acc) $ Computer 0 0 mempty
+solvePart1 p = evaluate $ runProgram p *> gets acc
 
-solvePart2 :: Program -> Maybe Int
-solvePart2 p = evalState (runPrograms (fixProgram p)) $ Computer 0 0 mempty
+solvePart2 :: Program -> ProgramResult
+solvePart2 p = evaluate $ runPrograms (fixProgram p)
+
+evaluate :: ComputerState a -> a
+evaluate = flip evalState (Computer 0 0 mempty)
 
 fixProgram :: Program -> [Program]
 fixProgram p = mapMaybe (modifyAt p) $ M.keys p
@@ -64,27 +67,26 @@ runPrograms [] = return Nothing
 runPrograms (p : ps) = do
   result <- runProgram p
   case result of
-    Just i -> return $ Just i
     Nothing -> reset *> runPrograms ps
+    success -> return success
 
 stepProgram :: Program -> ComputerState StepResult
 stepProgram p = do
   c <- get
-  let result = checkStep c p
-  case result of
-    Continue -> Continue <$ nextExecution p
-    _ -> return result
+  case stepResult c p of
+    Continue -> Continue <$ executeNext p
+    stop -> return stop
 
-nextExecution :: Program -> ComputerState ()
-nextExecution p = do
+executeNext :: Program -> ComputerState ()
+executeNext p = do
   i <- gets instr
   updateExecuted i <* case p M.! i of
     Nop _ -> increaseInstr 1
     Acc v -> increaseAcc v *> increaseInstr 1
     Jmp v -> increaseInstr v
 
-checkStep :: Computer -> Program -> StepResult
-checkStep (Computer i a e) p
+stepResult :: Computer -> Program -> StepResult
+stepResult (Computer i a e) p
   | i == M.size p = Stop (Just a)
   | i > M.size p || i `S.member` e = Stop Nothing
   | otherwise = Continue
@@ -93,13 +95,16 @@ reset :: ComputerState ()
 reset = put $ Computer 0 0 mempty
 
 increaseInstr :: Int -> ComputerState ()
-increaseInstr v = modify $ \s -> s {instr = instr s + v}
+increaseInstr i = modify $ \s -> s {instr = instr s + i}
 
 increaseAcc :: Int -> ComputerState ()
-increaseAcc v = modify $ \s -> s {acc = acc s + v}
+increaseAcc a = modify $ \s -> s {acc = acc s + a}
 
 updateExecuted :: Int -> ComputerState ()
 updateExecuted i = modify $ \s -> s {executed = S.insert i $ executed s}
+
+program :: Parser Program
+program = fromList . zip [0 ..] <$> instruction `sepBy` newline
 
 instruction :: Parser Instruction
 instruction = opCode <* spaceChar <*> integer
@@ -112,6 +117,3 @@ opCode = do
     "acc" -> return Acc
     "jmp" -> return Jmp
     _ -> fail "Invalid opCode"
-
-program :: Parser Program
-program = fromList . zip [0 ..] <$> instruction `sepBy` newline

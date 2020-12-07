@@ -35,7 +35,7 @@ type Parents = HashMap Bag (HashSet Bag)
 -- >>> part1
 -- 278
 part1 :: IO Int
-part1 = withInput "Day07.txt" (readInput $ parseBest parents) (\m -> S.size $ allParents m shinyGold)
+part1 = withInput "Day07.txt" (readInput $ parseBest parents) solvePart1
 
 -- >>> part2
 -- 45157
