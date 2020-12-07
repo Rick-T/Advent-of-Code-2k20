@@ -10,9 +10,13 @@ type Position = (Int, Int)
 
 type Map = Grid Tile
 
+-- >>> part1
+-- 167
 part1 :: IO Int
 part1 = withInput "Day03.txt" (readInput $ fromStringWith parseTile) $ solveSlope (3, 1)
 
+-- >>> part2
+-- 736527114
 part2 :: IO Int
 part2 = withInput "Day03.txt" (readInput $ fromStringWith parseTile) solvePart2
 

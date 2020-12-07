@@ -3,9 +3,13 @@ module Day05 where
 import Aoc.Input (readInputList, withInput)
 import Data.List (foldl', sort)
 
+-- >>> part1
+-- 922
 part1 :: IO Int
 part1 = withInput "Day05.txt" (readInputList parseSeatId) maximum
 
+-- >>> part2
+-- 747
 part2 :: IO Int
 part2 = withInput "Day05.txt" (readInputList parseSeatId) solvePart2
 

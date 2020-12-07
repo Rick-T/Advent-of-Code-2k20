@@ -40,9 +40,13 @@ data Entry = Valid PassField | Invalid Garbage | CID
 
 type Parser = Parsec Void String
 
+-- >>> part1
+-- 208
 part1 :: IO Int
 part1 = withInput "Day04.txt" (readInput $parseBest passports) solvePart1
 
+-- >>> part2
+-- 167
 part2 :: IO Int
 part2 = withInput "Day04.txt" (readInput $parseBest passports) solvePart2
 

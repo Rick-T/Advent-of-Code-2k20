@@ -5,9 +5,13 @@ import Data.Set (Set, insert)
 
 type Questions = Set Char
 
+-- >>> part1
+-- 6799
 part1 :: IO Int
 part1 = withInput "Day06.txt" (readInput readQuestions) solvePart1
 
+-- >>> part2
+-- 3354
 part2 :: IO Int
 part2 = withInput "Day06.txt" (readInput readQuestions) solvePart2
 

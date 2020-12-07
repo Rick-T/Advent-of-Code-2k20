@@ -2,9 +2,13 @@ module Day01 where
 
 import Aoc.Input (readInputList, withInput)
 
+-- >>> part1
+-- 928896
 part1 :: IO Int
 part1 = withInput "Day01.txt" (readInputList read) solvePart1
 
+-- >>> part2
+-- 295668576
 part2 :: IO Int
 part2 = withInput "Day01.txt" (readInputList read) solvePart2
 

@@ -12,9 +12,13 @@ data DbEntry = DbEntry Policy Password deriving (Show)
 
 type Password = String
 
+-- >>> part1
+-- 422
 part1 :: IO Int
 part1 = withInput "Day02.txt" (readInputList parseDbEntry) solvePart1
 
+-- >>> part2
+-- 451
 part2 :: IO Int
 part2 = withInput "Day02.txt" (readInputList parseDbEntry) solvePart2
 
