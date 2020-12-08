@@ -24,7 +24,9 @@ dependencies:
   - containers
   - hashable
   - megaparsec
+  - mtl
   - timeit
+  - transformers
   - unordered-containers
   - vector
 
