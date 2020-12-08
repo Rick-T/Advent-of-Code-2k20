@@ -9,15 +9,17 @@ import Control.Monad.State
     gets,
     modify,
   )
-import Data.IntMap as M (IntMap, fromList, insert, keys, size, (!))
 import Data.IntSet as S (IntSet, insert, member)
 import Data.Maybe (mapMaybe)
+import Data.Vector (Vector)
+import qualified Data.Vector as V (fromList, length, modify, (!))
+import Data.Vector.Generic.Mutable (write)
 import Text.Megaparsec (sepBy, some)
 import Text.Megaparsec.Char (letterChar, newline, spaceChar)
 
 data Instruction = Acc Int | Jmp Int | Nop Int deriving (Show)
 
-type Program = IntMap Instruction
+type Program = Vector Instruction
 
 data Computer = Computer {instr :: Int, acc :: Int, executed :: IntSet}
 
@@ -47,13 +49,13 @@ evaluate :: ComputerState a -> a
 evaluate = flip evalState (Computer 0 0 mempty)
 
 fixProgram :: Program -> [Program]
-fixProgram p = mapMaybe (modifyAt p) $ M.keys p
+fixProgram p = mapMaybe (modifyAt p) [0 .. V.length p - 1]
 
 modifyAt :: Program -> Int -> Maybe Program
-modifyAt p i = case p M.! i of
-  Nop v -> Just $ M.insert i (Jmp v) p
+modifyAt p i = case p V.! i of
+  Nop n -> Just $ V.modify (\v -> write v i (Jmp n)) p
   Acc _ -> Nothing
-  Jmp v -> Just $ M.insert i (Nop v) p
+  Jmp j -> Just $ V.modify (\v -> write v i (Nop j)) p
 
 runProgram :: Program -> ComputerState ProgramResult
 runProgram p = do
@@ -80,15 +82,15 @@ stepProgram p = do
 executeNext :: Program -> ComputerState ()
 executeNext p = do
   i <- gets instr
-  updateExecuted i <* case p M.! i of
+  updateExecuted i <* case p V.! i of
     Nop _ -> increaseInstr 1
     Acc v -> increaseAcc v *> increaseInstr 1
     Jmp v -> increaseInstr v
 
 stepResult :: Computer -> Program -> StepResult
 stepResult (Computer i a e) p
-  | i == M.size p = Stop (Just a)
-  | i > M.size p || i `S.member` e = Stop Nothing
+  | i == V.length p = Stop (Just a)
+  | i > V.length p || i `S.member` e = Stop Nothing
   | otherwise = Continue
 
 reset :: ComputerState ()
@@ -104,7 +106,7 @@ updateExecuted :: Int -> ComputerState ()
 updateExecuted i = modify $ \s -> s {executed = S.insert i $ executed s}
 
 program :: Parser Program
-program = fromList . zip [0 ..] <$> instruction `sepBy` newline
+program = V.fromList <$> instruction `sepBy` newline
 
 instruction :: Parser Instruction
 instruction = opCode <* spaceChar <*> integer
