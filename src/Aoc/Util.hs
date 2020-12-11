@@ -26,6 +26,11 @@ hasAtMost target condition
 hasExactly :: Foldable f => Int -> (a -> Bool) -> f a -> Bool
 hasExactly target condition = (== target) . countMatches condition
 
+firstEqual :: Eq x => [x] -> x
+firstEqual [] = undefined
+firstEqual [x] = x
+firstEqual (x : y : xs) = if x == y then x else firstEqual (y : xs)
+
 uncurry3 :: (a -> b -> c -> d) -> (a, b, c) -> d
 uncurry3 f (a, b, c) = f a b c
 

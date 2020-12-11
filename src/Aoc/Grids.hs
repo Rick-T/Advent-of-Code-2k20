@@ -5,9 +5,16 @@ module Aoc.Grids where
 import Control.Applicative (Applicative (liftA2))
 import Data.HashMap.Strict as M (HashMap, fromList)
 import Data.List (transpose)
-import Data.Vector as V (Vector, fromList, head, imap, length, map, (!), (!?))
+import Data.Vector as V (Vector, cons, fromList, head, imap, length, map, replicate, snoc, (!), (!?))
 
 newtype Grid a = Grid {toVector :: Vector (Vector a)} deriving (Eq, Functor, Foldable, Traversable)
+
+withBorder :: a -> Grid a -> Grid a
+withBorder border grid =
+  let sx = sizeX grid
+      vs = (\v -> V.cons border $ V.snoc v border) <$> toVector grid
+      topBorder = V.replicate (sx + 2) border
+   in Grid $ V.cons topBorder $ V.snoc vs topBorder
 
 parseGrid :: [[a]] -> Grid a
 parseGrid input = Grid . V.fromList $ [V.fromList line | line <- transpose input]
