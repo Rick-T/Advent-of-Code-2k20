@@ -17,9 +17,13 @@ type Position = (Int, Int)
 
 type Direction = (Int, Int)
 
+-- >>> part1
+-- 2361
 part1 :: IO Int
 part1 = withInput "Day11.txt" (readInput parseMap) solvePart1
 
+-- >>> part2
+-- 2119
 part2 :: IO Int
 part2 = withInput "Day11.txt" (readInput parseMap) solvePart2
 

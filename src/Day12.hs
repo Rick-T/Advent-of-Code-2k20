@@ -5,12 +5,6 @@ import Aoc.Parsers (Parser, integer, parseBest)
 import Aoc.Util (iterateN)
 import Text.Megaparsec.Char (letterChar)
 
-part1 :: IO Int
-part1 = withInput "Day12.txt" (readInputList $ parseBest instruction) solvePart1
-
-part2 :: IO Int
-part2 = withInput "Day12.txt" (readInputList $ parseBest instruction) solvePart2
-
 type Position = (Int, Int)
 
 type Interpreter = (Direction -> Ship -> Ship)
@@ -24,6 +18,16 @@ data InstructionType = Step Direction | Turn Turn | Go
 data Instruction = Instruction InstructionType Int
 
 data Ship = Ship {position :: Position, waypoint :: Position}
+
+-- >>> part1
+-- 796
+part1 :: IO Int
+part1 = withInput "Day12.txt" (readInputList $ parseBest instruction) solvePart1
+
+-- >>> part2
+-- 39446
+part2 :: IO Int
+part2 = withInput "Day12.txt" (readInputList $ parseBest instruction) solvePart2
 
 solvePart1 :: [Instruction] -> Int
 solvePart1 = manhattanDistance . position . moveAll stepShip (Ship (0, 0) (1, 0))
