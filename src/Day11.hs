@@ -1,21 +1,22 @@
 module Day11 where
 
-import Aoc.Grids (Grid, fromStringWith, imapP, withBorder, (!))
+import Aoc.Grid (Grid, fromStringWith, imapP, withBorder, (!))
 import Aoc.Input (readInput, withInput)
 import Aoc.Util (countMatches, firstEqual, hasAtLeast)
+import Aoc.Vector (V2 (V2))
 import Data.Maybe (catMaybes)
 
 type Map = Grid Tile
 
 data Tile = Border | Floor | Seat | Person deriving (Eq)
 
-type StateFunction = Map -> (Int, Int) -> Tile
+type StateFunction = Map -> Position -> Tile
 
-type TilesFunction = Map -> (Int, Int) -> [Tile]
+type TilesFunction = Map -> Position -> [Tile]
 
-type Position = (Int, Int)
+type Position = V2 Int
 
-type Direction = (Int, Int)
+type Direction = V2 Int
 
 -- >>> part1
 -- 2361
@@ -51,7 +52,7 @@ visibleTiles m p = catMaybes [visibleTile m d p | d <- directions]
 
 visibleTile :: Map -> Direction -> Position -> Maybe Tile
 visibleTile m d p =
-  let rayStep = add p d
+  let rayStep = p + d
    in case m ! rayStep of
         Floor -> visibleTile m d rayStep
         Person -> Just Person
@@ -64,13 +65,10 @@ adjacentTiles m p =
    in (m !) <$> adjs
 
 adjacents :: Position -> [Position]
-adjacents (x, y) = [(x + dx, y + dy) | (dx, dy) <- directions]
+adjacents r = [r + dr | dr <- directions]
 
 directions :: [Position]
-directions = [(dx, dy) | dx <- [-1 .. 1], dy <- [-1 .. 1], dy /= 0 || dx /= 0]
-
-add :: Position -> Direction -> Position
-add (x, y) (dx, dy) = (x + dx, y + dy)
+directions = [V2 dx dy | dx <- [-1 .. 1], dy <- [-1 .. 1], dy /= 0 || dx /= 0]
 
 parseMap :: String -> Map
 parseMap = withBorder Border . fromStringWith parseTile

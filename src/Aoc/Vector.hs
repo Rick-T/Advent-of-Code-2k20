@@ -1,14 +1,16 @@
+{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DeriveTraversable #-}
+{-# LANGUAGE GADTs #-}
 
 module Aoc.Vector where
 
+import Aoc.Grid (GridIndex (..))
 import Control.Applicative (Applicative (liftA2))
+import Data.Hashable (Hashable)
+import GHC.Generics (Generic)
 
-data V2 a = V2 a a deriving (Functor, Foldable, Traversable)
-
-instance Applicative V2 where
-  pure a = V2 a a
-  V2 f g <*> V2 x y = V2 (f x) (g y)
+data V2 a = V2 {_x, _y :: a} deriving (Functor, Foldable, Traversable, Eq, Generic, Hashable)
 
 instance Num a => Num (V2 a) where
   (+) = liftA2 (+)
@@ -22,8 +24,30 @@ instance Num a => Num (V2 a) where
 instance Semigroup a => Semigroup (V2 a) where
   V2 x y <> V2 dx dy = V2 (x <> dx) (y <> dy)
 
+instance Applicative V2 where
+  pure a = V2 a a
+  V2 f g <*> V2 x y = V2 (f x) (g y)
+
 instance Monoid a => Monoid (V2 a) where
   mempty = V2 mempty mempty
+
+instance (a ~ Int) => GridIndex (V2 a) where
+  toTuple (V2 x y) = (x, - y)
+  fromTuple (x, y) = V2 x (- y)
+
+instance Show a => Show (V2 a) where
+  show (V2 x y) = show (x, y)
+
+(.*) :: Num a => a -> V2 a -> V2 a
+(.*) s (V2 x y) = V2 (s * x) (s * y)
+
+infixl 7 .*
+
+mapX :: (a -> a) -> V2 a -> V2 a
+mapX f (V2 x y) = V2 (f x) y
+
+mapY :: (a -> a) -> V2 a -> V2 a
+mapY f (V2 x y) = V2 x (f y)
 
 len2 :: Num a => V2 a -> a
 len2 (V2 x y) = x * x + y * y
@@ -60,3 +84,18 @@ deg2rad d = pi * d / 180
 
 manhattanDistance :: Num a => V2 a -> a
 manhattanDistance (V2 x y) = abs x + abs y
+
+south :: Num a => V2 a
+south = V2 0 (-1)
+
+east :: Num a => V2 a
+east = V2 1 0
+
+north :: Num a => V2 a
+north = V2 0 1
+
+west :: Num a => V2 a
+west = V2 (-1) 0
+
+origin :: Num a => V2 a
+origin = 0

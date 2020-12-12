@@ -5,9 +5,14 @@ import Aoc.Parsers (Parser, integer, parseBest)
 import Aoc.Util (iterateN)
 import Aoc.Vector
   ( V2 (V2),
+    east,
     manhattanDistance,
+    north,
     rot270,
     rot90,
+    south,
+    west,
+    (.*),
   )
 import Text.Megaparsec.Char (letterChar)
 
@@ -60,10 +65,10 @@ instruction = do
   c <- letterChar
   i <- integer
   case c of
-    'N' -> return $ Step $ V2 0 i
-    'S' -> return $ Step $ V2 0 (- i)
-    'E' -> return $ Step $ V2 i 0
-    'W' -> return $ Step $ V2 (- i) 0
+    'N' -> return $ Step $ i .* north
+    'S' -> return $ Step $ i .* south
+    'E' -> return $ Step $ i .* east
+    'W' -> return $ Step $ i .* west
     'L' -> return $ Turn $ iterateN (i `div` 90) rot90
     'R' -> return $ Turn $ iterateN (i `div` 90) rot270
     'F' -> return $ Go i

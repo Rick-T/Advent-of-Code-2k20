@@ -38,7 +38,7 @@ source-repository head
 
 library
   exposed-modules:
-      Aoc.Grids
+      Aoc.Grid
       Aoc.Input
       Aoc.Parsers
       Aoc.Util
