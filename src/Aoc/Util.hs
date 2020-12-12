@@ -31,6 +31,9 @@ firstEqual [] = undefined
 firstEqual [x] = x
 firstEqual (x : y : xs) = if x == y then x else firstEqual (y : xs)
 
+iterateN :: Int -> (a -> a) -> a -> a
+iterateN i f = (!! i) . iterate f
+
 uncurry3 :: (a -> b -> c -> d) -> (a, b, c) -> d
 uncurry3 f (a, b, c) = f a b c
 
