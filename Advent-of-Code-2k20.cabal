@@ -42,6 +42,7 @@ library
       Aoc.Input
       Aoc.Parsers
       Aoc.Util
+      Aoc.Vector
       Day01
       Day02
       Day03
