@@ -26,6 +26,9 @@ hasAtMost target condition
 hasExactly :: Foldable f => Int -> (a -> Bool) -> f a -> Bool
 hasExactly target condition = (== target) . countMatches condition
 
+fixpoint :: Eq x => (x -> x) -> x -> x
+fixpoint f = firstEqual . iterate f
+
 firstEqual :: Eq x => [x] -> x
 firstEqual [] = undefined
 firstEqual [x] = x

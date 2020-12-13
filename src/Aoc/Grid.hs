@@ -55,8 +55,8 @@ sizeX = V.length . V.head . toVector
 sizeY :: Grid a -> Int
 sizeY = V.length . toVector
 
-bounds :: Grid a -> (Int, Int)
-bounds = liftA2 (,) sizeX sizeY
+bounds :: GridIndex idx => Grid a -> idx
+bounds = fromTuple . liftA2 (,) sizeX sizeY
 
 inBounds :: GridIndex idx => Grid a -> idx -> Bool
 inBounds grid idx =

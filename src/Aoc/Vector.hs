@@ -49,16 +49,10 @@ mapX f (V2 x y) = V2 (f x) y
 mapY :: (a -> a) -> V2 a -> V2 a
 mapY f (V2 x y) = V2 x (f y)
 
-len2 :: Num a => V2 a -> a
-len2 (V2 x y) = x * x + y * y
-
-len :: Floating a => V2 a -> a
-len (V2 x y) = sqrt (x * x + y * y)
-
 rotate :: Floating a => a -> V2 a -> V2 a
 rotate i (V2 x y) =
   let x' = x * cos i - y * sin i
-      y' = y * sin i + x * cos i
+      y' = x * sin i + y * cos i
    in V2 x' y'
 
 rotateDeg :: Floating a => a -> V2 a -> V2 a
@@ -79,11 +73,50 @@ rot180 (V2 x y) = V2 (- x) (- y)
 rot270 :: Num a => V2 a -> V2 a
 rot270 (V2 x y) = V2 y (- x)
 
+data DiscreteRotation = CW | CCW | MIRROR | ID deriving (Eq)
+
+instance Semigroup DiscreteRotation where
+  ID <> r = r
+  r <> ID = r
+  MIRROR <> MIRROR = ID
+  MIRROR <> CW = CCW
+  MIRROR <> CCW = CW
+  a <> MIRROR = MIRROR <> a
+  a <> b = if a == b then MIRROR else ID
+
+instance Monoid DiscreteRotation where
+  mempty = ID
+
+fromAngle :: (MonadFail m, Integral a) => a -> m DiscreteRotation
+fromAngle c = case c `mod` 360 of
+  0 -> return ID
+  90 -> return CCW
+  180 -> return MIRROR
+  270 -> return CW
+
+rotDiscrete :: Num a => DiscreteRotation -> V2 a -> V2 a
+rotDiscrete ID = id
+rotDiscrete CCW = rot90
+rotDiscrete MIRROR = rot180
+rotDiscrete CW = rot270
+
 deg2rad :: Floating a => a -> a
 deg2rad d = pi * d / 180
 
-manhattanDistance :: Num a => V2 a -> a
-manhattanDistance (V2 x y) = abs x + abs y
+len :: Floating a => V2 a -> a
+len (V2 x y) = sqrt (x * x + y * y)
+
+len2 :: Num a => V2 a -> a
+len2 (V2 x y) = x * x + y * y
+
+taxiNorm :: Num a => V2 a -> a
+taxiNorm (V2 x y) = abs x + abs y
+
+euclidNorm :: (Floating a) => V2 a -> a
+euclidNorm = len
+
+maxNorm :: (Num a, Ord a) => V2 a -> a
+maxNorm (V2 x y) = max (abs x) (abs y)
 
 south :: Num a => V2 a
 south = V2 0 (-1)

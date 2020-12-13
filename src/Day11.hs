@@ -2,7 +2,7 @@ module Day11 where
 
 import Aoc.Grid (Grid, fromStringWith, imapP, withBorder, (!))
 import Aoc.Input (readInput, withInput)
-import Aoc.Util (countMatches, firstEqual, hasAtLeast)
+import Aoc.Util (countMatches, fixpoint, hasAtLeast)
 import Aoc.Vector (V2 (V2))
 import Data.Maybe (catMaybes)
 
@@ -29,10 +29,10 @@ part2 :: IO Int
 part2 = withInput "Day11.txt" (readInput parseMap) solvePart2
 
 solvePart1 :: Map -> Int
-solvePart1 = countMatches (== Person) . firstEqual . iterate (step $ nextState adjacentTiles 4)
+solvePart1 = countMatches (== Person) . fixpoint (step $ nextState adjacentTiles 4)
 
 solvePart2 :: Map -> Int
-solvePart2 = countMatches (== Person) . firstEqual . iterate (step $ nextState visibleTiles 5)
+solvePart2 = countMatches (== Person) . fixpoint (step $ nextState visibleTiles 5)
 
 step :: StateFunction -> Map -> Map
 step f m = imapP (\k _ -> f m k) m
