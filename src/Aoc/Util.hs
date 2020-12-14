@@ -1,6 +1,8 @@
 module Aoc.Util where
 
-import Data.Foldable (toList)
+import Data.Char (digitToInt, intToDigit)
+import Data.Foldable (foldl', toList)
+import Numeric (showIntAtBase)
 
 countMatches :: Foldable f => (a -> Bool) -> f a -> Int
 countMatches condition = length . filter condition . toList
@@ -42,3 +44,11 @@ uncurry3 f (a, b, c) = f a b c
 
 minMax :: (Foldable t, Ord a, Bounded a) => t a -> (a, a)
 minMax = foldr (\a (x, y) -> (min x a, max y a)) (maxBound, minBound)
+
+fromBinary :: String -> Int
+fromBinary = foldl' (\a b -> 2 * a + b) 0 . fmap digitToInt
+
+toBinary :: Int -> String
+toBinary i =
+  let end = showIntAtBase 2 intToDigit i ""
+   in replicate (36 - length end) '0' ++ end
