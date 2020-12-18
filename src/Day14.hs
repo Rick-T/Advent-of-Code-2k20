@@ -24,9 +24,13 @@ type Accumulator = Mask -> Address -> IntMap Int
 
 type Interpreter = Mask -> Int -> [Int]
 
+-- >>> part1
+-- 10717676595607
 part1 :: IO Int
 part1 = withInput "Day14.txt" (readInput $ parseBest input) solvePart1
 
+-- >>> part2
+-- 3974538275659
 part2 :: IO Int
 part2 = withInput "Day14.txt" (readInput $ parseBest input) solvePart2
 

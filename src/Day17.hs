@@ -14,9 +14,13 @@ type Position = (Int, Int, Int, Int)
 
 data Cube = Active | Inactive deriving (Eq)
 
+-- >>> part1
+-- 257
 part1 :: IO Int
 part1 = withInput "Day17.txt" (readInput parse4dGridMap) solvePart1
 
+-- >>> part2
+-- 2532
 part2 :: IO Int
 part2 = withInput "Day17.txt" (readInput parse4dGridMap) solvePart2
 

@@ -16,9 +16,13 @@ type BusId = Integer
 
 data Schedule = Schedule Timestamp [BusId]
 
+-- >>> part1
+-- 3606
 part1 :: IO Integer
 part1 = withInput "Day13.txt" (readInput $ parseBest schedule) solvePart1
 
+-- >>> part2
+-- 379786358533423
 part2 :: IO Integer
 part2 = withInput "Day13.txt" (readInput $ parseBest contest) solvePart2
 

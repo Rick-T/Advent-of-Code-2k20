@@ -13,9 +13,13 @@ import Text.Megaparsec.Char (char, string)
 
 data Expr = Number Int | Plus Expr Expr | Times Expr Expr
 
+-- >>> part1
+-- 3159145843816
 part1 :: IO Int
 part1 = withInput "Day18.txt" (readInputList $ parseBest $ expr [[plus, times]]) (sum . fmap eval)
 
+-- >>> part2
+-- 55699621957369
 part2 :: IO Int
 part2 = withInput "Day18.txt" (readInputList $ parseBest $ expr [[plus], [times]]) (sum . fmap eval)
 

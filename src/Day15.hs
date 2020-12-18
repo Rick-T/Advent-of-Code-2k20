@@ -17,9 +17,13 @@ data GameStateT = GameState {getMap :: !Map, getNumber :: !Int, getCounter :: !I
 
 type GameState = State GameStateT
 
+-- >>> part1
+-- 475
 part1 :: Int
 part1 = solveV 2020 input
 
+-- >>> part2
+-- 11261
 part2 :: Int
 part2 = solveV 30000000 input
 

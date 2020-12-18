@@ -24,9 +24,13 @@ type Options = HashMap String (HashSet Int)
 
 data Input = Input Rules Ticket [Ticket]
 
+-- >>> part1
+-- 25895
 part1 :: IO Int
 part1 = withInput "Day16.txt" (readInput $ parseBest inputP) solvePart1
 
+-- >>> part2
+-- 5865723727753
 part2 :: IO Int
 part2 = withInput "Day16.txt" (readInput $ parseBest inputP) solvePart2
 
