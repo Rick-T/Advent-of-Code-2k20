@@ -1,8 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.2.
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
+--
+-- hash: 3ecee971843504a6b3bbdb3325987210f4f3819ddcb0eb83f3777dbb50943fe7
 
 name:           Advent-of-Code-2k20
 version:        0.1.0.0
@@ -36,6 +38,7 @@ data-files:
     input/Day15.txt
     input/Day16.txt
     input/Day17.txt
+    input/Day18.txt
 
 source-repository head
   type: git
@@ -65,6 +68,7 @@ library
       Day15
       Day16
       Day17
+      Day18
   other-modules:
       Paths_Advent_of_Code_2k20
   hs-source-dirs:
@@ -75,6 +79,7 @@ library
     , hashable
     , megaparsec
     , mtl
+    , parser-combinators
     , timeit
     , transformers
     , unordered-containers
@@ -95,6 +100,7 @@ executable Advent-of-Code-2k20-exe
     , hashable
     , megaparsec
     , mtl
+    , parser-combinators
     , timeit
     , transformers
     , unordered-containers
@@ -116,6 +122,7 @@ test-suite Advent-of-Code-2k20-test
     , hashable
     , megaparsec
     , mtl
+    , parser-combinators
     , timeit
     , transformers
     , unordered-containers

@@ -25,6 +25,7 @@ dependencies:
   - hashable
   - megaparsec
   - mtl
+  - parser-combinators
   - timeit
   - transformers
   - unordered-containers
