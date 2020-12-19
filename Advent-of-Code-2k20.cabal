@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9ef29d189e65cc9f4e0aea3adcf8748a8707a4a399896b8fd906b91ceffd49a2
+-- hash: 9b46378a18db94323b949e902a2220e865abc8748a7c1e854cdd32d894e1c2b9
 
 name:           Advent-of-Code-2k20
 version:        0.1.0.0
@@ -50,6 +50,7 @@ library
       Aoc.Grid
       Aoc.Input
       Aoc.Parsers
+      Aoc.Regex
       Aoc.Util
       Aoc.Vector
       Day01
@@ -82,6 +83,7 @@ library
     , megaparsec
     , mtl
     , parser-combinators
+    , semirings
     , timeit
     , transformers
     , unordered-containers
@@ -103,6 +105,7 @@ executable Advent-of-Code-2k20-exe
     , megaparsec
     , mtl
     , parser-combinators
+    , semirings
     , timeit
     , transformers
     , unordered-containers
@@ -125,6 +128,7 @@ test-suite Advent-of-Code-2k20-test
     , megaparsec
     , mtl
     , parser-combinators
+    , semirings
     , timeit
     , transformers
     , unordered-containers
