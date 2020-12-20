@@ -4,8 +4,10 @@
 module Aoc.Grid where
 
 import Control.Applicative (Applicative (liftA2))
-import Data.HashMap.Strict as M (HashMap, fromList)
+import Data.HashMap.Strict as M (HashMap, fromList, map, toList)
 import Data.Hashable (Hashable)
+import Data.List (groupBy, intercalate, sort, sortBy, sortOn)
+import Data.Ord (comparing)
 import Data.Vector as V (Vector, cons, fromList, head, ifoldl', imap, length, map, replicate, snoc, toList, (!), (!?))
 
 newtype Grid a = Grid {toVector :: Vector (Vector a)} deriving (Eq, Functor, Foldable, Traversable, Show)
@@ -48,6 +50,12 @@ fromString = parseGrid . lines
 
 fromStringWith :: (Char -> a) -> String -> Grid a
 fromStringWith f = mapP f . fromString
+
+toList :: GridIndex idx => Grid a -> [(idx, a)]
+toList grid = fmap (\i -> (i, grid Aoc.Grid.! i)) [fromTuple (x, y) | x <- [0 .. sizeX grid - 1], y <- [0 .. sizeY grid - 1]]
+
+fromList :: (GridIndex idx) => [(idx, a)] -> Grid a
+fromList values = parseGrid $ fmap (fmap snd) $ groupBy (\a b -> snd (fst a) == snd (fst b)) $ sortOn (\((x, y), _) -> (y, x)) $ [(toTuple idx, a) | (idx, a) <- values]
 
 sizeX :: Grid a -> Int
 sizeX = V.length . V.head . toVector
