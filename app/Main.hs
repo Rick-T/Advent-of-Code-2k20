@@ -23,13 +23,14 @@ import Day19 (part1, part2)
 import Day20 (part1, part2)
 import Day21 (part1, part2)
 import Day22 (part1, part2)
+import Day23 (part1, part2)
 import System.Environment (getArgs)
 import System.TimeIt (timeItNamed)
 
 main :: IO ()
 main = do
   puzzles <- fmap read <$> getArgs
-  forM_ puzzles runPuzzle
+  timeItNamed "Total Time: " $ forM_ puzzles runPuzzle
 
 runPuzzle :: Int -> IO ()
 runPuzzle p = do
@@ -60,6 +61,7 @@ getFuncs 19 = printable (Day19.part1, Day19.part2)
 getFuncs 20 = printable (Day20.part1, Day20.part2)
 getFuncs 21 = printable (Day21.part1, Day21.part2)
 getFuncs 22 = printable (Day22.part1, Day22.part2)
+getFuncs 23 = printable (return Day23.part1, return Day23.part2)
 
 printable :: (Show a, Show b) => (IO a, IO b) -> (IO (), IO ())
 printable (a, b) = (print =<< a, print =<< b)
