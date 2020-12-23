@@ -18,9 +18,13 @@ type Lookup = HashMap Allergen (HashSet Ingredient)
 
 type Input = [(HashSet Ingredient, [Allergen])]
 
+-- >>> part1
+-- 2461
 part1 :: IO Int
 part1 = withInput "Day21.txt" (readInputList $ parseBest foodP) solvePart1
 
+-- >>> part2
+-- "ltbj,nrfmm,pvhcsn,jxbnb,chpdjkf,jtqt,zzkq,jqnhd"
 part2 :: IO String
 part2 = withInput "Day21.txt" (readInputList $ parseBest foodP) solvePart2
 

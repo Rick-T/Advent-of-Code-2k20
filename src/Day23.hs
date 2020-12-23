@@ -8,9 +8,13 @@ import qualified Data.Vector.Unboxed as V
 import Data.Vector.Unboxed.Mutable (MVector)
 import qualified Data.Vector.Unboxed.Mutable as VM
 
+-- >>> part1
+-- 89573246
 part1 :: Int
 part1 = read $ V.toList $ V.map intToDigit $ elemsAfter 1 $ playGame 100 input
 
+-- >>> part2
+-- 2029056128
 part2 :: Int
 part2 = V.product $ V.take 2 $ elemsAfter 1 $ playGame 10000000 (input ++ [10 .. 1000000])
 

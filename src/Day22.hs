@@ -13,9 +13,13 @@ type Deck = Queue Int
 
 data Winner = P1 Deck | P2 Deck
 
+-- >>> part1
+-- 32856
 part1 :: IO Int
 part1 = withInput "Day22.txt" (readInput $ parseBest inputP) solvePart1
 
+-- >>> part2
+-- 33805
 part2 :: IO Int
 part2 = withInput "Day22.txt" (readInput $ parseBest inputP) solvePart2
 
