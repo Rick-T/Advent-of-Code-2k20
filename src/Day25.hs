@@ -1,8 +1,12 @@
 module Day25 where
 
+-- >>> part1
+-- 4968512
 part1 :: Integer
 part1 = encryptionKey (loopSize pkCard) pkDoor
 
+-- >>> part2
+-- "⭐"
 part2 :: String
 part2 = "⭐"
 

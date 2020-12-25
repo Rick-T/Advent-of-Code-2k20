@@ -16,9 +16,13 @@ type Position = V2 Int
 
 type Floor = HashSet Position
 
+-- >>> part1
+-- 269
 part1 :: IO Int
 part1 = withInput "Day24.txt" (readInput $ parseBest inputP) $ solve 0
 
+-- 3667
+-- >>> part2
 part2 :: IO Int
 part2 = withInput "Day24.txt" (readInput $ parseBest inputP) $ solve 100
 
