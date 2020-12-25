@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5f074e5114f5c5dc8c909ed17ffb1aba1d4f06d6c74398247576dd0a1e1c627a
+-- hash: 6a5439ea1bf6c02979cce2b9a103d9c0297c57786a43e1735e3372c99da3f161
 
 name:           Advent-of-Code-2k20
 version:        0.1.0.0
@@ -83,6 +83,7 @@ library
       Day22
       Day23
       Day24
+      Day25
   other-modules:
       Paths_Advent_of_Code_2k20
   hs-source-dirs:

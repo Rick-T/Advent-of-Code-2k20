@@ -25,12 +25,14 @@ import Day21 (part1, part2)
 import Day22 (part1, part2)
 import Day23 (part1, part2)
 import Day24 (part1, part2)
+import Day25 (part1, part2)
 import System.Environment (getArgs)
 import System.TimeIt (timeItNamed)
 
 main :: IO ()
 main = do
-  puzzles <- fmap read <$> getArgs
+  args <- getArgs
+  let puzzles = if null args then [1 .. 25] else read <$> args
   timeItNamed "Total Time: " $ forM_ puzzles runPuzzle
 
 runPuzzle :: Int -> IO ()
@@ -64,6 +66,7 @@ getFuncs 21 = printable (Day21.part1, Day21.part2)
 getFuncs 22 = printable (Day22.part1, Day22.part2)
 getFuncs 23 = printable (return Day23.part1, return Day23.part2)
 getFuncs 24 = printable (Day24.part1, Day24.part2)
+getFuncs 25 = printable (return Day25.part1, return Day25.part2)
 
 printable :: (Show a, Show b) => (IO a, IO b) -> (IO (), IO ())
 printable (a, b) = (print =<< a, print =<< b)
